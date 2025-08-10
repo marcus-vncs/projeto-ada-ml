@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ator extends Pessoa {
-    // Pode ter atributos específicos de ator, se necessário
+
 }
