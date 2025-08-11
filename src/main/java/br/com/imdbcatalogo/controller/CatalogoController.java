@@ -22,8 +22,16 @@ public class CatalogoController {
         int opcao;
         do {
             exibirMenu();
-            opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpar buffer
+            //valida se a opção é um inteiro
+            try {
+                opcao = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Por favor, digite um número válido!");
+                scanner.nextLine();
+                opcao = -1;
+                continue;
+            }
 
             switch (opcao) {
                 case 1: cadastrarFilme(); break;
