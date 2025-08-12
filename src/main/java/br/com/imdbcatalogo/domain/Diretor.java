@@ -19,11 +19,19 @@ public class Diretor extends Pessoa {
     }
 
     public List<Filme> getFilmesDirigidos() {
-        return filmesDirigidos;
+        return new ArrayList<>(filmesDirigidos);
     }
 
     @Override
     public String toString() {
-        return "Diretor: " + getNome() + ", Nacionalidade: " + getNacionalidade();
+        StringBuilder sb = new StringBuilder();
+        sb.append("╔══════════════════════════════════════╗\n");
+        sb.append("║              DIRETOR                 ║\n");
+        sb.append("╠══════════════════════════════════════╣\n");
+        sb.append("║ Nome: ").append(String.format("%-29s", getNome())).append("║\n");
+        sb.append("║ Nacionalidade: ").append(String.format("%-19s", getNacionalidade())).append("║\n");
+        sb.append("║ Filmes dirigidos: ").append(String.format("%-15d", filmesDirigidos.size())).append("║\n");
+        sb.append("╚══════════════════════════════════════╝");
+        return sb.toString();
     }
 }

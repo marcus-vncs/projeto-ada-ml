@@ -19,11 +19,19 @@ public class Ator extends Pessoa {
     }
 
     public List<Filme> getFilmesParticipados() {
-        return filmesParticipados;
+        return new ArrayList<>(filmesParticipados);
     }
 
     @Override
     public String toString() {
-        return "Ator: " + getNome() + ", Nacionalidade: " + getNacionalidade();
+        StringBuilder sb = new StringBuilder();
+        sb.append("╔══════════════════════════════════════╗\n");
+        sb.append("║               ATOR                   ║\n");
+        sb.append("╠══════════════════════════════════════╣\n");
+        sb.append("║ Nome: ").append(String.format("%-29s", getNome())).append("║\n");
+        sb.append("║ Nacionalidade: ").append(String.format("%-19s", getNacionalidade())).append("║\n");
+        sb.append("║ Filmes: ").append(String.format("%-27d", filmesParticipados.size())).append("║\n");
+        sb.append("╚══════════════════════════════════════╝");
+        return sb.toString();
     }
 }

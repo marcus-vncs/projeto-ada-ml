@@ -1,4 +1,5 @@
 package com.imdbcatalogo.controller;
+
 import com.imdbcatalogo.domain.*;
 import com.imdbcatalogo.service.FilmeService;
 import com.imdbcatalogo.service.PessoaService;
@@ -19,19 +20,15 @@ public class CatalogoController {
     }
 
     public void iniciar() {
+        System.out.println("╔════════════════════════════════════════╗");
+        System.out.println("║          BEM-VINDO AO IMDB             ║");
+        System.out.println("║        Sistema de Catálogo             ║");
+        System.out.println("╚════════════════════════════════════════╝");
+
         int opcao;
         do {
             exibirMenu();
-            //valida se a opção é um inteiro
-            try {
-                opcao = scanner.nextInt();
-                scanner.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println("Erro: Por favor, digite um número válido!");
-                scanner.nextLine();
-                opcao = -1;
-                continue;
-            }
+            opcao = lerOpcao();
 
             switch (opcao) {
                 case 1: cadastrarFilme(); break;
@@ -40,27 +37,54 @@ public class CatalogoController {
                 case 4: associarAtoresFilme(); break;
                 case 5: pesquisarFilme(); break;
                 case 6: listarFilmes(); break;
-                case 0: System.out.println("Saindo..."); break;
-                default: System.out.println("Opção inválida!");
+                case 7: listarAtores(); break;
+                case 8: listarDiretores(); break;
+                case 9: exibirEstatisticas(); break;
+                case 0:
+                    System.out.println("╔════════════════════════════════════════╗");
+                    System.out.println("║          Obrigado por usar!            ║");
+                    System.out.println("╚════════════════════════════════════════╝");
+                    break;
+                default:
+                    System.out.println("❌ Opção inválida! Tente novamente.");
             }
         } while (opcao != 0);
     }
 
+    private int lerOpcao() {
+        try {
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+            return opcao;
+        } catch (InputMismatchException e) {
+            System.out.println("❌ Erro: Por favor, digite um número válido!");
+            scanner.nextLine();
+            return -1;
+        }
+    }
+
     private void exibirMenu() {
-        System.out.println("\n=== CATÁLOGO IMDB ===");
-        System.out.println("1. Cadastrar Filme");
-        System.out.println("2. Cadastrar Ator");
-        System.out.println("3. Cadastrar Diretor");
-        System.out.println("4. Associar Atores a Filme");
-        System.out.println("5. Pesquisar Filme");
-        System.out.println("6. Listar Todos os Filmes");
-        System.out.println("0. Sair");
+        System.out.println("\n╔════════════════════════════════════════╗");
+        System.out.println("║            MENU PRINCIPAL              ║");
+        System.out.println("╠════════════════════════════════════════╣");
+        System.out.println("║ 1. 🎬 Cadastrar Filme                  ║");
+        System.out.println("║ 2. 🎭 Cadastrar Ator                   ║");
+        System.out.println("║ 3. 🎯 Cadastrar Diretor                ║");
+        System.out.println("║ 4. 🔗 Associar Atores a Filme          ║");
+        System.out.println("║ 5. 🔍 Pesquisar Filme                  ║");
+        System.out.println("║ 6. 📋 Listar Todos os Filmes           ║");
+        System.out.println("║ 7. 📋 Listar Todos os Atores           ║");
+        System.out.println("║ 8. 📋 Listar Todos os Diretores        ║");
+        System.out.println("║ 9. 📊 Estatísticas                     ║");
+        System.out.println("║ 0. 🚪 Sair                             ║");
+        System.out.println("╚════════════════════════════════════════╝");
         System.out.print("Escolha uma opção: ");
     }
 
     private void cadastrarFilme() {
         try {
-            System.out.println("\n--- Cadastro de Filme ---");
+            System.out.println("\n🎬 --- Cadastro de Filme ---");
+
             System.out.print("Nome: ");
             String nome = scanner.nextLine();
 
@@ -76,13 +100,13 @@ public class CatalogoController {
 
             List<Diretor> diretores = pessoaService.listarDiretores();
             if (diretores.isEmpty()) {
-                System.out.println("Nenhum diretor cadastrado. Cadastre um diretor primeiro.");
+                System.out.println("❌ Nenhum diretor cadastrado. Cadastre um diretor primeiro.");
                 return;
             }
 
-            System.out.println("Diretores disponíveis:");
+            System.out.println("\n📋 Diretores disponíveis:");
             for (int i = 0; i < diretores.size(); i++) {
-                System.out.println((i + 1) + ". " + diretores.get(i).getNome());
+                System.out.println("  " + (i + 1) + ". " + diretores.get(i).getNome());
             }
 
             System.out.print("Escolha o número do diretor: ");
@@ -90,23 +114,24 @@ public class CatalogoController {
             scanner.nextLine();
 
             if (indice < 0 || indice >= diretores.size()) {
-                System.out.println("Índice inválido!");
+                System.out.println("❌ Índice inválido!");
                 return;
             }
 
             Diretor diretor = diretores.get(indice);
             Filme filme = new Filme(nome, dataLancamento, orcamento, descricao, diretor);
             filmeService.cadastrarFilme(filme);
-            System.out.println("Filme cadastrado com sucesso!");
+            System.out.println("✅ Filme cadastrado com sucesso!");
 
         } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("❌ Erro: " + e.getMessage());
         }
     }
 
     private void cadastrarAtor() {
         try {
-            System.out.println("\n--- Cadastro de Ator ---");
+            System.out.println("\n🎭 --- Cadastro de Ator ---");
+
             System.out.print("Nome: ");
             String nome = scanner.nextLine();
 
@@ -118,16 +143,17 @@ public class CatalogoController {
 
             Ator ator = new Ator(nome, dataNascimento, nacionalidade);
             pessoaService.cadastrarAtor(ator);
-            System.out.println("Ator cadastrado com sucesso!");
+            System.out.println("✅ Ator cadastrado com sucesso!");
 
         } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("❌ Erro: " + e.getMessage());
         }
     }
 
     private void cadastrarDiretor() {
         try {
-            System.out.println("\n--- Cadastro de Diretor ---");
+            System.out.println("\n🎯 --- Cadastro de Diretor ---");
+
             System.out.print("Nome: ");
             String nome = scanner.nextLine();
 
@@ -139,10 +165,10 @@ public class CatalogoController {
 
             Diretor diretor = new Diretor(nome, dataNascimento, nacionalidade);
             pessoaService.cadastrarDiretor(diretor);
-            System.out.println("Diretor cadastrado com sucesso!");
+            System.out.println("✅ Diretor cadastrado com sucesso!");
 
         } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("❌ Erro: " + e.getMessage());
         }
     }
 
@@ -221,5 +247,39 @@ public class CatalogoController {
             System.out.println("\n--- Todos os Filmes ---");
             filmes.forEach(System.out::println);
         }
+    }
+
+    private void listarAtores() {
+        List<Ator> atores = pessoaService.listarAtores();
+        if (atores.isEmpty()) {
+            System.out.println("❌ Nenhum ator cadastrado.");
+        } else {
+            System.out.println("\n🎭 --- Todos os Atores ---");
+            atores.forEach(System.out::println);
+        }
+    }
+
+    private void listarDiretores() {
+        List<Diretor> diretores = pessoaService.listarDiretores();
+        if (diretores.isEmpty()) {
+            System.out.println("❌ Nenhum diretor cadastrado.");
+        } else {
+            System.out.println("\n🎯 --- Todos os Diretores ---");
+            diretores.forEach(System.out::println);
+        }
+    }
+
+    private void exibirEstatisticas() {
+        int totalFilmes = filmeService.listarFilmes().size();
+        int totalAtores = pessoaService.listarAtores().size();
+        int totalDiretores = pessoaService.listarDiretores().size();
+
+        System.out.println("\n╔════════════════════════════════════════╗");
+        System.out.println("║              ESTATÍSTICAS              ║");
+        System.out.println("╠════════════════════════════════════════╣");
+        System.out.println("║ 🎬 Total de Filmes: " + String.format("%-18d", totalFilmes) + "║");
+        System.out.println("║ 🎭 Total de Atores: " + String.format("%-18d", totalAtores) + "║");
+        System.out.println("║ 🎯 Total de Diretores: " + String.format("%-15d", totalDiretores) + "║");
+        System.out.println("╚════════════════════════════════════════╝");
     }
 }

@@ -1,6 +1,7 @@
 package com.imdbcatalogo.domain;
 
 import java.util.Date;
+import java.util.Objects;
 
 public abstract class Pessoa {
     private String nome;
@@ -8,9 +9,19 @@ public abstract class Pessoa {
     private String nacionalidade;
 
     public Pessoa(String nome, Date dataNascimento, String nacionalidade) {
-        this.nome = nome;
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
+        }
+        if (dataNascimento == null) {
+            throw new IllegalArgumentException("Data de nascimento não pode ser nula");
+        }
+        if (nacionalidade == null || nacionalidade.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nacionalidade não pode ser nula ou vazia");
+        }
+
+        this.nome = nome.trim();
         this.dataNascimento = dataNascimento;
-        this.nacionalidade = nacionalidade;
+        this.nacionalidade = nacionalidade.trim();
     }
 
     // Getters e Setters
@@ -19,7 +30,10 @@ public abstract class Pessoa {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
+        }
+        this.nome = nome.trim();
     }
 
     public Date getDataNascimento() {
@@ -27,6 +41,9 @@ public abstract class Pessoa {
     }
 
     public void setDataNascimento(Date dataNascimento) {
+        if (dataNascimento == null) {
+            throw new IllegalArgumentException("Data de nascimento não pode ser nula");
+        }
         this.dataNascimento = dataNascimento;
     }
 
@@ -35,7 +52,25 @@ public abstract class Pessoa {
     }
 
     public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
+        if (nacionalidade == null || nacionalidade.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nacionalidade não pode ser nula ou vazia");
+        }
+        this.nacionalidade = nacionalidade.trim();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Pessoa pessoa = (Pessoa) obj;
+        return Objects.equals(nome, pessoa.nome) &&
+               Objects.equals(dataNascimento, pessoa.dataNascimento) &&
+               Objects.equals(nacionalidade, pessoa.nacionalidade);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, dataNascimento, nacionalidade);
     }
 
     @Override

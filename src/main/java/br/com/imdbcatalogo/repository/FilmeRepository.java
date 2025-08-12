@@ -11,6 +11,9 @@ public class FilmeRepository {
     }
 
     public void salvar(Filme filme) {
+        if (filme == null) {
+            throw new IllegalArgumentException("Filme não pode ser nulo");
+        }
         database.salvarFilme(filme);
     }
 
