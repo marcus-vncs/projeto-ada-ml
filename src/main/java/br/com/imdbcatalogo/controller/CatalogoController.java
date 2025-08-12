@@ -44,6 +44,7 @@ public class CatalogoController {
                     System.out.println("╔════════════════════════════════════════╗");
                     System.out.println("║          Obrigado por usar!            ║");
                     System.out.println("╚════════════════════════════════════════╝");
+                    scanner.close(); // Fechar o scanner antes de sair
                     break;
                 default:
                     System.out.println("❌ Opção inválida! Tente novamente.");

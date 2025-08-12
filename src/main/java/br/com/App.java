@@ -3,8 +3,12 @@ package com;
 import com.imdbcatalogo.controller.CatalogoController;
 import com.imdbcatalogo.repository.*;
 import com.imdbcatalogo.service.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class App {
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
+
     public static void main(String[] args) {
         try {
             // Inicializa o banco de dados em memória
@@ -26,7 +30,7 @@ public class App {
 
         } catch (Exception e) {
             System.err.println("Erro fatal na aplicação: " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Erro fatal na aplicação", e);
         }
     }
 }
