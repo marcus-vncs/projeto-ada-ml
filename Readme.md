@@ -1,21 +1,3 @@
-Projeto: IMDB Catalogo
-Descrição: Um catálogo de filmes inspirado no IMDB, com funcionalidades de CRUD para filmes, atores, diretores e pessoas.
-# Estrutura do Projeto
-```
-src/
-├── main/
-│   ├── java/
-        ├── br/
-        │   └── com/
-        │       └── imdbcatalogo/
-        │           ├── domain/        # Entidades e classes de modelo (Filme, Ator, Diretor, Pessoa)
-        │           ├── repository/    # Persistência e DAOs (FilmeDAO, PessoaDAO, etc.)
-        │           ├── service/       # Regras de negócio (FilmeService, PessoaService, etc.)
-        │           ├── controller/    # Camada de controle (pode ser CLI, REST, ou GUI)
-        │           └── utils/          # Utilitários (conexão com banco, helpers, etc.)
-        └── App.java                  # Classe principal para execução do projeto
-
-```
 # Documentação do Projeto projeto-ada-ml
 
 ## 1. Visão Geral
@@ -146,3 +128,5 @@ O sistema implementa validações em diversos níveis:
 - Logging para erros severos
 
 ---
+
+Nota: Esta documentação foi baseada nos arquivos disponíveis no repositório. O código pode conter mais funcionalidades não cobertas nesta análise. Para uma visualização completa do projeto, acesse [github.com/emsbt/projeto-ada-ml](https://github.com/emsbt/projeto-ada-ml).
